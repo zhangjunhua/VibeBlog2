@@ -1,0 +1,40 @@
+---
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../utils/paths";
+import type { BlogPost } from "../../utils/posts";
+import { getPublishedPosts } from "../../utils/posts";
+import { getPostsByTag, getTagSummaries } from "../../utils/taxonomy";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+
+  return getTagSummaries(posts).map(({ tag }) => ({
+    params: { tag },
+    props: { tag, posts: getPostsByTag(posts, tag) },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: BlogPost[];
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`标签：${tag}`} description={`包含标签 ${tag} 的全部文章。`}>
+  <div class="shell content">
+    <header class="page-header">
+      <a class="back-link" href={withBase("/tags/")}>
+        ← 返回全部标签
+      </a>
+      <p class="eyebrow">Tag</p>
+      <h1>#{tag}</h1>
+      <p class="page-description">共 {posts.length} 篇文章。</p>
+    </header>
+    <div class="page-section">
+      <PostList posts={posts} />
+    </div>
+  </div>
+</BaseLayout>

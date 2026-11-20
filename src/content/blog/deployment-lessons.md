@@ -3,6 +3,8 @@ title: "从一次失败部署中学到的事"
 description: "页面在本地一切正常，上线后却样式丢失。复盘这次问题，我整理了一套更可靠的静态站点部署检查方法。"
 pubDate: "2025-12-20"
 updatedDate: "2025-12-22"
+category: experience
+tags: [astro, github-pages, deployment]
 ---
 
 第一次把静态博客部署到项目子路径时，本地预览完全正常，线上却只剩下没有样式的 HTML，文章链接也全部失效。问题并不神秘：我把开发环境的根路径当成了理所当然。

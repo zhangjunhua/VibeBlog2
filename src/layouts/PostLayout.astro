@@ -1,14 +1,29 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import GiscusComments from "../components/GiscusComments.astro";
+import PostNavigation from "../components/PostNavigation.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import TaxonomyLinks from "../components/TaxonomyLinks.astro";
+import { withBase } from "../utils/paths";
 import type { BlogPost } from "../utils/posts";
 import { formatDate, toDateAttribute } from "../utils/posts";
-import { withBase } from "../utils/paths";
+import { getReadingTime } from "../utils/reading-time";
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Props {
   post: BlogPost;
+  headings: Heading[];
+  previousPost?: BlogPost;
+  nextPost?: BlogPost;
 }
 
-const { post } = Astro.props;
+const { post, headings, previousPost, nextPost } = Astro.props;
+const readingTime = getReadingTime(post.body);
 ---
 
 <BaseLayout
@@ -21,7 +36,8 @@ const { post } = Astro.props;
       <a class="back-link" href={withBase("/blog/")}>
         ← 返回全部文章
       </a>
-      <h1>{post.data.title}</h1>
+      <h1 data-pagefind-meta="title">{post.data.title}</h1>
+      <TaxonomyLinks category={post.data.category} tags={post.data.tags} />
       <p class="article-meta">
         <time datetime={toDateAttribute(post.data.pubDate)}>
           发布于 {formatDate(post.data.pubDate)}
@@ -31,10 +47,14 @@ const { post } = Astro.props;
             更新于 {formatDate(post.data.updatedDate)}
           </time>
         )}
+        <span>约 {readingTime} 分钟</span>
       </p>
     </header>
-    <div class="prose">
+    <TableOfContents headings={headings} />
+    <div class="prose" data-pagefind-body>
       <slot />
     </div>
+    <PostNavigation previousPost={previousPost} nextPost={nextPost} />
   </article>
+  <GiscusComments postId={post.id} />
 </BaseLayout>

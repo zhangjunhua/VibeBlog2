@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../utils/paths";
+import { getPublishedPosts } from "../../utils/posts";
+import { getTagSummaries, getTagUrl } from "../../utils/taxonomy";
+
+const posts = await getPublishedPosts();
+const tags = getTagSummaries(posts);
+---
+
+<BaseLayout title="标签" description="按具体主题浏览博客文章。">
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">Tags</p>
+      <h1>标签</h1>
+      <p class="page-description">标签用于连接跨越不同分类的具体主题。</p>
+    </header>
+    <div class="page-section">
+      <div class="section-heading">
+        <h2>全部标签</h2>
+        <a class="text-link" href={withBase("/categories/")}>
+          返回分类 →
+        </a>
+      </div>
+      <div class="tag-cloud" aria-label="全部标签">
+        {tags.map(({ tag, count }) => (
+          <a class="tag-cloud-link" href={getTagUrl(tag)}>
+            <span>#{tag}</span>
+            <span class="tag-count">{count}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

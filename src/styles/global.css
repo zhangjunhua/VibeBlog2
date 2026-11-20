@@ -122,6 +122,7 @@ h3 {
 
 .header-inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
@@ -388,6 +389,219 @@ h3 {
   border-top: 1px solid var(--line);
 }
 
+.taxonomy-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+}
+
+.category-link {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent-dark);
+  text-decoration: none;
+}
+
+.tag-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+}
+
+.tag-links a {
+  color: var(--muted);
+}
+
+.taxonomy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+.taxonomy-card {
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.taxonomy-card:hover {
+  border-color: var(--accent);
+}
+
+.taxonomy-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.35rem;
+}
+
+.taxonomy-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.taxonomy-card-count,
+.tag-count {
+  color: var(--faint);
+  font-size: 0.75rem;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+}
+
+.tag-cloud-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.tag-cloud-link:hover {
+  border-color: var(--accent);
+}
+
+.table-of-contents {
+  margin-bottom: 2.5rem;
+  padding: 1.25rem 1.5rem;
+  border-block: 1px solid var(--line);
+}
+
+.table-of-contents h2 {
+  margin-bottom: 0.75rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.table-of-contents ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.table-of-contents li + li {
+  margin-top: 0.35rem;
+}
+
+.table-of-contents a {
+  text-decoration: none;
+}
+
+.toc-depth-3 {
+  margin-left: 1.25rem;
+}
+
+.prose :is(h2, h3) {
+  scroll-margin-top: 2rem;
+}
+
+.post-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.post-navigation-item a {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.post-navigation-item a:hover {
+  border-color: var(--accent);
+}
+
+.post-navigation-item span {
+  color: var(--faint);
+  font-size: 0.75rem;
+}
+
+.post-navigation-item strong {
+  font-family: "Iowan Old Style", "Noto Serif SC", "Songti SC", STSong, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.post-navigation-next {
+  text-align: right;
+}
+
+.search-section {
+  min-height: 16rem;
+  padding-bottom: 5rem;
+}
+
+.search-notice {
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.search-notice p:last-child {
+  margin-bottom: 0;
+}
+
+.search-notice code {
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: var(--code);
+  font-size: 0.85em;
+}
+
+.search-ui {
+  --pagefind-ui-scale: 0.9;
+  --pagefind-ui-primary: var(--accent-dark);
+  --pagefind-ui-text: var(--text);
+  --pagefind-ui-background: var(--surface);
+  --pagefind-ui-border: var(--line);
+  --pagefind-ui-tag: var(--background);
+  min-height: 12rem;
+}
+
+.comments-section {
+  padding-block: 3rem 5rem;
+  border-top: 1px solid var(--line);
+}
+
+.comments-section h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.comments-section .giscus {
+  max-width: 100%;
+}
+
 .archive-list {
   padding-bottom: 4rem;
 }
@@ -522,8 +736,23 @@ h3 {
   }
 
   .site-nav {
-    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.75rem;
     font-size: 0.85rem;
+  }
+
+  .taxonomy-grid,
+  .post-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .post-navigation-next {
+    text-align: left;
+  }
+
+  .table-of-contents {
+    padding-inline: 1rem;
   }
 
   .hero {

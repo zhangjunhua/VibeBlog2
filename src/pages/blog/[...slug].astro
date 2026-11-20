@@ -7,20 +7,31 @@ import { getPublishedPosts } from "../../utils/posts";
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
 
-  return posts.map((post) => ({
+  return posts.map((post, index) => ({
     params: { slug: post.id },
-    props: { post },
+    props: {
+      post,
+      previousPost: posts[index + 1],
+      nextPost: posts[index - 1],
+    },
   }));
 }
 
 interface Props {
   post: BlogPost;
+  previousPost?: BlogPost;
+  nextPost?: BlogPost;
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post, previousPost, nextPost } = Astro.props;
+const { Content, headings } = await render(post);
 ---
 
-<PostLayout post={post}>
+<PostLayout
+  post={post}
+  headings={headings}
+  previousPost={previousPost}
+  nextPost={nextPost}
+>
   <Content />
 </PostLayout>

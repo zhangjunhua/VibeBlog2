@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { categories } from "../../taxonomy.config";
+import { withBase } from "../../utils/paths";
+import { getPublishedPosts } from "../../utils/posts";
+import { getCategoryUrl, getPostsByCategory } from "../../utils/taxonomy";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="分类" description="按学习、生活和经验浏览博客文章。">
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">Categories</p>
+      <h1>分类</h1>
+      <p class="page-description">三类稳定的主题，以及跨越分类的具体标签。</p>
+    </header>
+    <div class="page-section">
+      <div class="section-heading">
+        <h2>文章分类</h2>
+        <a class="text-link" href={withBase("/tags/")}>
+          查看全部标签 →
+        </a>
+      </div>
+      <div class="taxonomy-grid">
+        {categories.map((category) => (
+          <a class="taxonomy-card" href={getCategoryUrl(category.slug)}>
+            <span class="taxonomy-card-count">
+              {getPostsByCategory(posts, category.slug).length} 篇
+            </span>
+            <h3>{category.label}</h3>
+            <p>{category.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

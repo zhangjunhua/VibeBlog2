@@ -1,0 +1,43 @@
+---
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Category } from "../../taxonomy.config";
+import { categories } from "../../taxonomy.config";
+import type { BlogPost } from "../../utils/posts";
+import { getPublishedPosts } from "../../utils/posts";
+import { getPostsByCategory } from "../../utils/taxonomy";
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+
+  return categories.map((category) => ({
+    params: { category: category.slug },
+    props: {
+      category,
+      posts: getPostsByCategory(posts, category.slug),
+    },
+  }));
+}
+
+interface Props {
+  category: Category;
+  posts: BlogPost[];
+}
+
+const { category, posts } = Astro.props;
+---
+
+<BaseLayout title={`${category.label}分类`} description={category.description}>
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">Category</p>
+      <h1>{category.label}</h1>
+      <p class="page-description">
+        {category.description} 共 {posts.length} 篇。
+      </p>
+    </header>
+    <div class="page-section">
+      {posts.length > 0 ? <PostList posts={posts} /> : <p>暂无文章。</p>}
+    </div>
+  </div>
+</BaseLayout>

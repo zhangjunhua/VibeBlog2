@@ -1,0 +1,30 @@
+---
+import type { BlogPost } from "../utils/posts";
+import { getPostUrl } from "../utils/posts";
+
+interface Props {
+  previousPost?: BlogPost;
+  nextPost?: BlogPost;
+}
+
+const { previousPost, nextPost } = Astro.props;
+---
+
+<nav class="post-navigation" aria-label="相邻文章">
+  <div class="post-navigation-item">
+    {previousPost && (
+      <a href={getPostUrl(previousPost)}>
+        <span>上一篇 · 较早</span>
+        <strong>{previousPost.data.title}</strong>
+      </a>
+    )}
+  </div>
+  <div class="post-navigation-item post-navigation-next">
+    {nextPost && (
+      <a href={getPostUrl(nextPost)}>
+        <span>下一篇 · 较新</span>
+        <strong>{nextPost.data.title}</strong>
+      </a>
+    )}
+  </div>
+</nav>

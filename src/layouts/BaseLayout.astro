@@ -16,7 +16,9 @@ const canonical = Astro.site
   : undefined;
 const navItems = [
   { label: "文章", href: withBase("/blog/") },
+  { label: "分类", href: withBase("/categories/") },
   { label: "归档", href: withBase("/archive/") },
+  { label: "搜索", href: withBase("/search/") },
   { label: "关于", href: withBase("/about/") },
 ];
 ---
@@ -40,6 +42,7 @@ const navItems = [
       title={site.name}
       href={withBase("/rss.xml")}
     />
+    <slot name="head" />
     <title>{pageTitle}</title>
   </head>
   <body>

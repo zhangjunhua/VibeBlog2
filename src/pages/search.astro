@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths";
+
+const isDev = import.meta.env.DEV;
+const baseUrl = withBase();
+const bundlePath = withBase("/pagefind/");
+---
+
+<BaseLayout title="搜索" description="搜索博客中已发布文章的标题和正文。">
+  {!isDev && (
+    <link
+      slot="head"
+      rel="stylesheet"
+      href={withBase("/pagefind/pagefind-ui.css")}
+    />
+  )}
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">Search</p>
+      <h1>搜索</h1>
+      <p class="page-description">输入关键词，查找已发布文章的标题和正文。</p>
+    </header>
+    <div class="search-section">
+      {isDev ? (
+        <div class="search-notice">
+          <p>搜索索引会在生产构建时生成。</p>
+          <p>
+            请先运行 <code>npm run build</code>，再通过
+            <code>npm run preview</code> 预览搜索功能。
+          </p>
+        </div>
+      ) : (
+        <>
+          <div id="search" class="search-ui" />
+          <script is:inline src={withBase("/pagefind/pagefind-ui.js")}></script>
+          <script is:inline define:vars={{ baseUrl, bundlePath }}>
+            new PagefindUI({
+              element: "#search",
+              baseUrl,
+              bundlePath,
+              showImages: false,
+              showSubResults: true,
+            });
+          </script>
+        </>
+      )}
+      <noscript>
+        <p>搜索需要 JavaScript。你也可以通过以下入口浏览文章：</p>
+        <ul>
+          <li>
+            <a href={withBase("/blog/")}>全部文章</a>
+          </li>
+          <li>
+            <a href={withBase("/categories/")}>文章分类</a>
+          </li>
+          <li>
+            <a href={withBase("/tags/")}>全部标签</a>
+          </li>
+        </ul>
+      </noscript>
+    </div>
+  </div>
+</BaseLayout>

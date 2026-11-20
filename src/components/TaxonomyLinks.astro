@@ -1,0 +1,25 @@
+---
+import type { CategorySlug } from "../taxonomy.config";
+import { getCategory } from "../taxonomy.config";
+import { getCategoryUrl, getTagUrl } from "../utils/taxonomy";
+
+interface Props {
+  category: CategorySlug;
+  tags: string[];
+}
+
+const { category, tags } = Astro.props;
+---
+
+<div class="taxonomy-links" aria-label="文章分类与标签">
+  <a class="category-link" href={getCategoryUrl(category)}>
+    {getCategory(category).label}
+  </a>
+  {tags.length > 0 && (
+    <span class="tag-links" aria-label="标签">
+      {tags.map((tag) => (
+        <a href={getTagUrl(tag)}>#{tag}</a>
+      ))}
+    </span>
+  )}
+</div>
