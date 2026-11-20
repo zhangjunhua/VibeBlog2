@@ -1,0 +1,28 @@
+---
+import type { BlogPost } from "../utils/posts";
+import { formatDate, getPostUrl, toDateAttribute } from "../utils/posts";
+
+interface Props {
+  posts: BlogPost[];
+  headingLevel?: "h2" | "h3";
+}
+
+const { posts, headingLevel = "h2" } = Astro.props;
+const Heading = headingLevel;
+---
+
+<ul class="post-list">
+  {posts.map((post) => (
+    <li class="post-item">
+      <time class="post-date" datetime={toDateAttribute(post.data.pubDate)}>
+        {formatDate(post.data.pubDate)}
+      </time>
+      <div>
+        <Heading class="post-title">
+          <a href={getPostUrl(post)}>{post.data.title}</a>
+        </Heading>
+        <p class="post-description">{post.data.description}</p>
+      </div>
+    </li>
+  ))}
+</ul>

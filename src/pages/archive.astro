@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  formatDate,
+  getPostUrl,
+  getPublishedPosts,
+  groupPostsByYear,
+  toDateAttribute,
+} from "../utils/posts";
+
+const posts = await getPublishedPosts();
+const archiveGroups = groupPostsByYear(posts);
+---
+
+<BaseLayout title="归档" description="按年份回顾博客中的全部文章。">
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">Archive</p>
+      <h1>归档</h1>
+      <p class="page-description">沿着时间，回顾写下的每一篇记录。</p>
+    </header>
+    <div class="archive-list">
+      {archiveGroups.map((group) => (
+        <section class="archive-group" aria-labelledby={`year-${group.year}`}>
+          <h2 class="archive-year" id={`year-${group.year}`}>
+            {group.year}
+          </h2>
+          <ul class="archive-items">
+            {group.posts.map((post) => (
+              <li class="archive-item">
+                <a href={getPostUrl(post)}>{post.data.title}</a>
+                <time datetime={toDateAttribute(post.data.pubDate)}>
+                  {formatDate(post.data.pubDate)}
+                </time>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

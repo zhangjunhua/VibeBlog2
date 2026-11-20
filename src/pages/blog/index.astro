@@ -1,0 +1,20 @@
+---
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPublishedPosts } from "../../utils/posts";
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="文章" description="学习、生活与实践中的全部记录。">
+  <div class="shell content">
+    <header class="page-header">
+      <p class="eyebrow">All notes</p>
+      <h1>文章</h1>
+      <p class="page-description">共 {posts.length} 篇，按发布时间倒序排列。</p>
+    </header>
+    <div class="page-section">
+      <PostList posts={posts} />
+    </div>
+  </div>
+</BaseLayout>
